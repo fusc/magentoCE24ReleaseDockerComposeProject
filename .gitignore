@@ -10,6 +10,7 @@ atlassian*
 /.idea
 
 /src-magento
+!/src-magento/.gitkeep
 /transfer/domain.sql.gz
 /transfer/pub.media.tar.gz
 /transfer/vendor.tar.gz
