@@ -45,10 +45,6 @@ php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy -f --theme=Magento/blank zh_Hans_CN
 php bin/magento setup:static-content:deploy -f --theme=Magento/Luma zh_Hans_CN
 php bin/magento setup:static-content:deploy -f --theme=Magento/blank en_US
-php bin/magento setup:static-content:deploy -f --theme=D1m/vue zh_Hans_CN
-php bin/magento setup:static-content:deploy -f --theme=D1m/vue zh_Hans_CN
-php bin/magento setup:static-content:deploy -f --theme=D1m/Backend en_US
-php bin/magento setup:static-content:deploy -f --theme=D1m/Backend zh_Hans_CN
 ```
 
 
