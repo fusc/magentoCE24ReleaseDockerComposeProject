@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -aeuo pipefail
+
+# create the dotenv file if it doesn't exist
+if [ ! -f .env ]; then
+  cp .env.default .env
+fi
+
+source .env
+
+VERSION=$(cat VERSION)
+
+APP=()
+NO_DEV="*"
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --app)
+            APP+=("$2")
+            shift 2
+            ;;
+        --no-dev)
+            NO_DEV="yml"
+            shift 1
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+FILES="-f ./docker-compose.yml"
+if [[ ! -n "${APP-}" ]]; then
+    FILES="${FILES} $(find ./src-* -maxdepth 1 -name "docker-compose.${NO_DEV}" -exec echo "-f {} " \;)"
+else
+    for i in ${APP[@]}; do
+        FILES="${FILES} $(find ./src-${i} -maxdepth 1 -name 'docker-compose.${NO_DEV}' -exec echo '-f {} ' \;)"
+    done
+fi
+
+docker-compose $FILES $@

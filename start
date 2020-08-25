@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+if [ ! $USER ]; then
+    USER='guest'
+fi
+
+set -aeuo pipefail
+date
+
+if [ ! $(which git-lfs) ]; then
+    echo "You need Git LFS to run this project"
+    echo ""
+    echo "    https://git-lfs.github.com"
+    echo "    MacOS install : brew install git-lfs"
+    echo ""
+    exit 1
+fi
+
+echo "try to add +x rights for : chmod +x ./build ./stop ./start ./fetch ./docker-compose";
+chmod +x ./build ./stop ./start ./fetch ./docker-compose
+
+echo 'try to chmod 777 to ./.docker/elasticsearch/logs ./.docker/mysql/log ./.docker/nginx'
+chmod -R 777 ./.docker/elasticsearch/logs ./.docker/mysql/log ./.docker/nginx
+
+# create the dotenv file if it doesn't exist
+if [ ! -f .env ]; then
+  cp .env.default .env
+fi
+
+if [ ! -f ./src-magento/app/etc/env.php ] && [ -f ./src-magento/app/etc/env.php.dev.sample ]; then
+  cp ./src-magento/app/etc/env.php.dev.sample ./src-magento/app/etc/env.php
+fi
+if [ ! -f ./src-magento/app/etc/config.php ] && [ -f ./src-magento/app/etc/config.php.sample ]; then
+  cp ./src-magento/app/etc/config.php.sample ./src-magento/app/etc/config.php
+fi
+
+
+source ./.env
+
+#try to build
+echo "***************************"
+sh ./build
+echo "***************************"
+#docker login
+
+echo 'starting : docker container ls'
+echo "***************************"
+docker container ls
+echo "***************************"
+
+echo 'starting : docker volume ls'
+echo "***************************"
+docker volume ls
+echo "***************************"
+
+time=`date +%H:%M:%S`
+echo $USER + " : " +  $time
+
+echo "start modules"
+echo "***************************"
+
+./docker-compose up $@

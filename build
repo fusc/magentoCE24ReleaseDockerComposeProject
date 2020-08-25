@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+if [ ! $USER ]; then
+    echo "USER is empty"
+    USER='guest'
+fi
+
+set -aeuo pipefail
+date
+
+# create the dotenv file if it doesn't exist
+if [ ! -f .env ]; then
+  cp .env.default .env
+fi
+
+pwd
+
+source ./.env
+
+if [ ! -f ./.docker/vendor.flag ] && [ -f ./transfer/vendor.tar.gz ]; then
+  cd ./src-magento/
+  tar xzfv ./../transfer/vendor.tar.gz
+  pwd
+  touch ./../.docker/vendor.flag
+  cd ./../
+fi
+
+if [ ! -f ./.docker/media.flag ] && [ -f ./transfer/pub.media.tar.gz ]; then
+  cd ./src-magento/pub/
+  pwd
+  tar xzfv ./../../transfer/pub.media.tar.gz
+  touch ./../../.docker/media.flag
+  cd ./../../
+fi
+
+echo 'Current Path:'
+echo '*******************'
+echo 'where am I?' + pwd
+echo '*******************'
+
+if [ ! -f ./.docker/built.flag ]; then
+
+  if [ -f ./.docker/crond/Dockerfile ]; then
+      echo 'Start to build php-cron'
+      docker build -f ./.docker/crond/Dockerfile -t ${PROJECT}/php:7.4-cli-alpine3.12-with-sockets .
+      echo 'End to build php-cron'
+  fi
+
+  if [ -f ./.docker/php-fpm/Dockerfile ]; then
+      echo 'Start to build php-fpm'
+      docker build -f ./.docker/php-fpm/Dockerfile -t ${PROJECT}/php:7.4-fpm-alpine3.12-with-sockets .
+      echo 'End to build php-fpm'
+  fi
+
+
+  if [ -f ./.docker/nginx/Dockerfile ]; then
+      echo 'Start to build nginx'
+      docker build -f ./.docker/nginx/Dockerfile -t ${PROJECT}/nginx:1.17.6-alpine .
+      echo 'End to build nginx'
+  fi
+
+  pwd
+  touch ./.docker/built.flag
+
+fi

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -aeuo pipefail
+
+source .env
+
+# set COMPOSE_PROJECT_NAME environment variable that will be used by the networks
+COMPOSE_PROJECT_NAME="${PROJECT}_${ENVIRONMENT}"
+VERSION=$(cat VERSION)
+
+echo "stop modules"
+echo "*************************************"
+docker-compose -f ./docker-compose.yml $(find ./src-* -maxdepth 1 -name 'docker-compose.yml' -exec echo '-f {} ' \;) down

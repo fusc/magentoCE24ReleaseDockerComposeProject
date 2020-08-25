@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -aeuo pipefail
+
+source ./.env
+
+# set COMPOSE_PROJECT_NAME environment variable that will be used by the networks
+COMPOSE_PROJECT_NAME="${PROJECT}_${ENVIRONMENT}"
+VERSION=$(cat VERSION)
+
+echo "rm all marked files"
+rm  -rf ./.docker/*.flag
+rm  -rf ./.docker/*.txt
+
+echo "stop modules and remove images"
+./docker-compose down --rmi local --volumes
+
+echo 'docker images ls -q'
+echo "***************************"
+docker images ls -q
+echo "***************************"
+echo 'docker container ls -q'
+echo "***************************"
+docker container ls -q
+echo "***************************"
+echo 'docker volume ls -q'
+echo "***************************"
+docker volume ls -q
+echo "***************************"
+
+#docker rmi -f $(docker images --filter reference="phpmyadmin/*" -q)  2> /dev/null
+#docker rmi -f $(docker images --filter reference="${CONTAINER_REGISTRY}/*" -q)  2> /dev/null
+
+# it is not easy to fetch all images, so kept it in default
+#{
+    #echo 'First Step： remove all images'
+    #docker rmi -f $(docker images -q) 2> /dev/null
+#} || {
+#    # save log for exception
+#}
+
+{ # try
+    echo 'Second Step： remove all containers'
+    docker container rm -f $(docker container ls -q) 2> /dev/null
+} || { # catch
+    echo "Try to remove containers failed."
+}
+
+{ # try
+    echo 'Third Step ： remove all volumes'
+    docker volume rm -f $(docker volume ls -q) 2> /dev/null
+} || { # catch
+    # save log for exception
+    echo "Try to remove volumes failed."
+}
+
+
+
+##del all
+
+{ # try
+    docker stop $(docker ps -a | grep "Exited" | awk '{print $1 }')  2> /dev/null
+} || { # catch
+    # save log for exception
+    echo "Try to stop all container failed."
+}
+
+{ # try
+    docker rm $(docker ps -a | grep "Exited" | awk '{print $1 }')  2> /dev/null
+} || { # catch
+    # save log for exception
+    echo "Try to remove all container failed."
+}
+
+
+#docker rmi $(docker images | grep "none" | awk '{print $3}')  2> /dev/null
+
+echo "docker images ls -q"
+docker images ls -q
+echo "***************************"
+echo "docker images ls -q"
+docker container ls -q
+echo "***************************"
+echo "docker volume ls -q"
+docker volume ls -q

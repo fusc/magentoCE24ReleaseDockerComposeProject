@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -aeuo pipefail
+
+source .env
+
+docker rmi -f $(docker images | grep "${CONTAINER_REGISTRY}" | awk '{print $3}') 2> /dev/null || true
