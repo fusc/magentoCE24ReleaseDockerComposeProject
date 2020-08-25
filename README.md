@@ -3,28 +3,30 @@
 # Magento ce 2.4 使用 DOCKER 一键部署开发环境 
 
 ### 建议：
-#### 1 使用中国镜像加速
+#### 1. 使用中国镜像加速
 ```
  "https://registry.docker-cn.com",
  "https://xxxxxxxxxxxxxxxx.mirror.aliyuncs.com"
 ```
 
-#### 2 在开始执行 `shell` 之前，在 `cmd` or `Windows PowerShell` 里执行 `fetch.bat` 预下载所有所需要的 `Images`，以提升 `start` 的速度 。
+#### 2. 在开始执行 `shell` 之前，在 `cmd` or `Windows PowerShell` 里执行 `fetch.bat` 预下载所有所需要的 `Images`，以提升 `start` 的速度 。
 
 ```
 fetch.bat //只能在 `cmd` or `Windows PowerShell`  执行
+sh ./fetch //在 bash 里执行
 ```
 
-### 开始
+### 3. 复制 Magento 2.4 CE 的所有代码 `./src-magento` 目录下
+
+### 4. 开始
 `sh start -d`
 
-###  删除
+### 5. 删除
 `sh stop`
 
 
 
-
-### magento shell
+### 6. magento shell
 
 #### 进入到 cron 的 容器,然后转到 www-data用户下
 ```
