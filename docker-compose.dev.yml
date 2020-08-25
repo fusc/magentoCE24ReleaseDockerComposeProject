@@ -31,6 +31,7 @@ services:
       - php-fpm
     volumes:
       #- /etc/localtime:/etc/localtime:ro
+      - ./src-magento/app:/data/www/app
       - magento-data-media:/data/www/pub/media
       - magento-data-static:/data/www/pub/static
 
