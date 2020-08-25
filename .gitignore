@@ -25,4 +25,4 @@ atlassian*
 /.docker/nginx/logs/access.log
 /.env
 /.docker/elasticsearch/logs/*
-
+!/.docker/elasticsearch/logs/.gitkeep

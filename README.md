@@ -30,7 +30,12 @@ sh ./fetch //在 bash 里执行
 
 #### 进入到 cron 的 容器,然后转到 www-data用户下
 ```
+docker exec -it xxxxx sh
 su www-data
+```
+### 安装 magento ce 2.4
+```
+/usr/local/bin/php bin/magento setup:install --base-url=http://docker.loc/ --db-host=mysql --db-name=domain --db-user=root --db-password=mysql --admin-firstname=Magento --admin-lastname=User --admin-email=robinfu@d1m.cn --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200  --use-sample-data
 ```
 
 ```shell
@@ -46,10 +51,6 @@ php bin/magento setup:static-content:deploy -f --theme=D1m/Backend en_US
 php bin/magento setup:static-content:deploy -f --theme=D1m/Backend zh_Hans_CN
 ```
 
-### go  to container
-```
-    docker exec -it xxxxx sh
-```
 
 ### copy files to container
 ```
@@ -61,10 +62,4 @@ php bin/magento setup:static-content:deploy -f --theme=D1m/Backend zh_Hans_CN
 ### update the code right
 ```
 chown -R www-data:www-data src-magento
-```
-
-
-### install magento
-```
-/usr/local/bin/php bin/magento setup:install --base-url=http://docker.loc/ --db-host=mysql --db-name=domain --db-user=root --db-password=mysql --admin-firstname=Magento --admin-lastname=User --admin-email=robinfu@d1m.cn --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200  --use-sample-data
 ```
