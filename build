@@ -35,7 +35,8 @@ fi
 
 echo 'Current Path:'
 echo '*******************'
-echo 'where am I?' + pwd
+echo 'where am I?'
+pwd
 echo '*******************'
 
 if [ ! -f ./.docker/built.flag ]; then
