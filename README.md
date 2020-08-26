@@ -17,7 +17,7 @@ sh ./fetch //在 bash 里执行
 ```
 
 ### 3. 复制 Magento 2.4 CE 的所有代码 `./src-magento` 目录下
-- 请在这里下载： https://github.com/magento/magento2/tree/2.4 OR https://magento.com/tech-resources/download
+- 请在这里下载： https://github.com/magento/magento2/tree/2.4 OR https://magento.com/tech-resources/download#archive-releases
 
 ### 4. 开始
 `sh start`
@@ -36,7 +36,7 @@ su www-data
 ```
 ### 安装 magento ce 2.4
 ```
-/usr/local/bin/php bin/magento setup:install --base-url=http://docker.loc/ --db-host=mysql --db-name=domain --db-user=root --db-password=mysql --admin-firstname=Magento --admin-lastname=User --admin-email=robinfu@d1m.cn --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200  --use-sample-data
+/usr/local/bin/php bin/magento setup:install --base-url=http://docker.loc/ --db-host=mysql --db-name=domain --db-user=root --db-password=mysql --admin-firstname=Magento --admin-lastname=User --admin-email=robinfu@shtag.com --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200  --use-sample-data
 ```
 
 ```shell
