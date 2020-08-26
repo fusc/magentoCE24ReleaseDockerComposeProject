@@ -20,7 +20,7 @@ sh ./fetch //在 bash 里执行
 - 请在这里下载： https://github.com/magento/magento2/tree/2.4
 
 ### 4. 开始
-`sh start -d`
+`sh start`
 
 ### 5. 删除
 `sh stop`
