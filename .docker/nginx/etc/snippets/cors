@@ -1,7 +1,7 @@
 set $allow_headers 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
 set $allow_origin '';
 
-if ( $http_origin ~* (https?://(.+\.)?(shtag|ulooo|docker)\.(?:net|local)(:\d+)?$) ) {
+if ( $http_origin ~* (https?://(.+\.)?(shtag|ulooo|docker)\.(?:net|local|loc)(:\d+)?$) ) {
      set $allow_origin "$http_origin";
 }
 
