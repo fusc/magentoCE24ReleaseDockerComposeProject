@@ -17,6 +17,7 @@ sh ./fetch //在 bash 里执行
 ```
 
 ### 3. 复制 Magento 2.4 CE 的所有代码 `./src-magento` 目录下
+- 请在这里下载： https://github.com/magento/magento2/tree/2.4
 
 ### 4. 开始
 `sh start -d`
